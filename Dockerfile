@@ -1,7 +1,6 @@
 FROM java
 MAINTAINER Ridnarong Promya
-RUN curl http://apache.stu.edu.tw/flume/1.6.0/apache-flume-1.6.0-bin.tar.gz | tar -xzC /opt/
-RUN mv /opt/apache-flume-1.6.0-bin /opt/flume
+RUN curl http://apache.stu.edu.tw/flume/1.6.0/apache-flume-1.6.0-bin.tar.gz | tar -xzC /opt/ && mv /opt/apache-flume-1.6.0-bin /opt/flume
 ADD run.sh /opt/flume/run.sh
 RUN chmod +x /opt/flume/run.sh
 ENV FLUME_SOURCES_TYPE netcat
