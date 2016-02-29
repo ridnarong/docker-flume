@@ -8,8 +8,13 @@ sinks_env=$(compgen -A variable | grep FLUME_SINKS_)
 channels_env=$(compgen -A variable | grep FLUME_CHANNELS_)
 
 #Prepare config file
-conf_file="/opt/flume/conf/my.conf"
 
+
+if [ ! -f /opt/flume/conf/.auto ]; then
+  conf_file="/dev/null"
+else
+  conf_file="/opt/flume/conf/my.conf"
+fi
 cat > $conf_file <<- EOM
 a1.sources = r1
 a1.sinks = k1
@@ -56,6 +61,10 @@ cat >> $conf_file <<- EOM
 a1.sources.r1.channels = c1
 a1.sinks.k1.channel = c1
 EOM
+
+if [ ! -f /opt/flume/conf/.auto ]; then
+  conf_file=$FLUME_CONF_FILE
+fi
 
 cat << EOF
 Flume will run by using following config.
