@@ -20,10 +20,11 @@ FLUME_CHANNELS_TRANSACTION_CAPACITY 100
 
 Configuration
 =============
-Flume's configuration will be generated from environment variables with `FLUME_` prefix. Currently we only support single source, sink, and channel which can generate from `FLUME_SOURCES_`, `FLUME_SINKS_`, `FLUME_CHANNELS_` prefix respectively. If the suffix are multiple word with `_` separation it will try to create camel-case words for it. Here is some example:
+Flume's configuration will be generated from environment variables with `FLUME_` prefix. Currently we only support single source, sink, and channel which can generate from `FLUME_SOURCES_`, `FLUME_SINKS_`, `FLUME_CHANNELS_` prefix respectively. If the suffix are multiple word with `_` separation it will try to create camel-case words for it. Double underscore `__` in environment variables' name will convert to dot `.`. Here are some examples:
 
 * `FLUME_SOURCES_TYPE netcat` will be `a1.sources.r1.type = netcat`
 * `FLUME_CHANNELS_TRANSACTION_CAPACITY 100` will be `a1.channels.c1.transactionCapacity = 100`
+* `FLUME_SINKS_DESERIALIALIZER__MAX_LINE_LENGTH 2048` will be `a1.sinks.k1.deserialializer.maxLineLength = 2048`
 
 Run
 ===

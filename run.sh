@@ -31,7 +31,14 @@ for r in $sources_env; do
   numbers=$(grep -o "_" <<< "$r" | wc -l)
   for (( i = 2; i < $numbers; i++ )); do
     foo=$(echo $substring | cut -d'_' -f $i)
-    key="$key${foo:0:1}$(tr '[:upper:]' '[:lower:]' <<< ${foo:1})"
+    len=${#foo}
+    if [ $len -eq 0 ]; then
+      ((i=i+1))
+      foo=$(echo $substring | cut -d'_' -f $i)
+      key="$key.$(tr '[:upper:]' '[:lower:]' <<< $foo)"
+    else
+      key="$key${foo:0:1}$(tr '[:upper:]' '[:lower:]' <<< ${foo:1})"
+    fi
   done
   echo "a1.sources.r1.$key = ${!r}" >> $conf_file
 done
@@ -41,7 +48,14 @@ for r in $sinks_env; do
   numbers=$(grep -o "_" <<< "$r" | wc -l)
   for (( i = 2; i < $numbers; i++ )); do
     foo=$(echo $substring | cut -d'_' -f $i)
-    key="$key${foo:0:1}$(tr '[:upper:]' '[:lower:]' <<< ${foo:1})"
+    len=${#foo}
+    if [ $len -eq 0 ]; then
+      ((i=i+1))
+      foo=$(echo $substring | cut -d'_' -f $i)
+      key="$key.$(tr '[:upper:]' '[:lower:]' <<< $foo)"
+    else
+      key="$key${foo:0:1}$(tr '[:upper:]' '[:lower:]' <<< ${foo:1})"
+    fi
   done
   echo "a1.sinks.k1.$key = ${!r}" >> $conf_file
 done
@@ -52,7 +66,14 @@ for r in $channels_env; do
   numbers=$(grep -o "_" <<< "$r" | wc -l)
   for (( i = 2; i < $numbers; i++ )); do
     foo=$(echo $substring | cut -d'_' -f $i)
-    key="$key${foo:0:1}$(tr '[:upper:]' '[:lower:]' <<< ${foo:1})"
+    len=${#foo}
+    if [ $len -eq 0 ]; then
+      ((i=i+1))
+      foo=$(echo $substring | cut -d'_' -f $i)
+      key="$key.$(tr '[:upper:]' '[:lower:]' <<< $foo)"
+    else
+      key="$key${foo:0:1}$(tr '[:upper:]' '[:lower:]' <<< ${foo:1})"
+    fi
   done
   echo "a1.channels.c1.$key = ${!r}" >> $conf_file
 done
